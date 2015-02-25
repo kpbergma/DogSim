@@ -1,5 +1,10 @@
 # DogSim
-Dog Simulation for SensorUp
+Dog Simulation for SensorUp<BR>
+Author: Karel Bergmann<BR>
+The main class is DogManager.<P>
+
+RUNNING:<BR>
+Simply run as java dogsim/DogManager  No additional parameters are needed, but simulation is fully customizable from parameters withing dogsim.Dog, dogsim.Arena and dogsim.DogManager.<P>
 
 The code models an arena, and a number of dogs with simulated behaviours.  Features include:<BR>
 Dog behaviour:<BR>
@@ -19,5 +24,3 @@ Also included is a GUI to show what is going on in the interaction space:<BR>
 	doesn’t have to follow the dog around to see its vital signs.<BR>
 -The largest, most dense cluster of dogs is highlighted in red, and their ID numbers
 	are added to a watch list for monitoring.<P>
-
-The main class is DogManager.
