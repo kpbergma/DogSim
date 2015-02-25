@@ -1,9 +1,9 @@
 # DogSim
 Dog Simulation for SensorUp
 
-The code models an arena, and a number of dogs with simulated behaviours.  Features include:
-Dog behaviour:
--Dogs wander the arena
+The code models an arena, and a number of dogs with simulated behaviours.  Features include:<P>
+Dog behaviour:<P>
+-Dogs wander the arena<P>
 -Dogs chase other dogs when they are in sight
 -Heart rates and internal temperatures are represented
 -Temps and HR’s rise while a dog is running
