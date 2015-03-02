@@ -16,6 +16,8 @@ Dog behaviour:<BR>
 -Dogs turn around when they near a wall<BR>
 -Each dog runs in its own thread<P>
 
+The program connects to a web service, and provides dog information to the server.  The server-side code and configuration is located at the Github repository github.com/kpbergma/DogPark.<p>
+
 Also included is a GUI to show what is going on in the interaction space:<BR>
 -Shows the arena floor as a soccer field<BR>
 -Each dog is represented by a dog icon with its ID number shown<BR>
