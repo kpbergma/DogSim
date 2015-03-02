@@ -17,7 +17,7 @@ import us.monoid.web.Resty;
  */
 public class FitBit {
 	private Dog fDog;	//Dog FitBit is attached to.
-	private static final String SERVER_URL = "http://localhost:8080/locationserver/locationupdate/";
+	private static final String SERVER_URL = "http://localhost:8080/DogPark/webresources/DogPark/update";
 	
 	/**
 	 * Constructor specifying attached Dog.
@@ -38,14 +38,15 @@ public class FitBit {
 	 * @see DogState
 	 * @see Dog
 	 */
-	public void transmit () {		
-		/*Resty r = new Resty();
+	public void transmit () {				
+		Resty r = new Resty();
 		try {
-			r.text(SERVER_URL + fDog.getId(), 
-					Resty.put(Resty.content(fDog.getDogState().toString())));
+			String status = r.text(SERVER_URL, Resty.put(Resty.content(fDog.getDogState().toJSON()))).toString();
+			System.out.println (status);
 		} catch (IOException e) {
-			// do nothing, a lost update isn't critical.
-		}*/
-		System.out.println(fDog.getDogState().toString());
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(fDog.getDogState().toJSON());
 	}
 }

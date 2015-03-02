@@ -19,7 +19,7 @@ import java.util.Vector;
  * @see FitBit
  */
 public class Dog extends Thread {
-	private static long REFRESH_INTERVAL = 1000;	//milliseconds between updates
+	private static long REFRESH_INTERVAL = 500;		//milliseconds between updates
 	private static long MAX_HR = 200;				//dog's max heart rate
 	private static double MAX_TEMP = 45;			//dog's max internal temp in C
 	private static double NORMAL_TEMP = 15;			//dog's normal temp.
@@ -123,8 +123,8 @@ public class Dog extends Thread {
 			updateTemp();
 			updateHR();
 			updateDirection();
-			updatePosition();
 			updateVelocity();
+			updatePosition();
 			
 			fTransmitter.transmit();
 			try {
@@ -204,7 +204,7 @@ public class Dog extends Thread {
 	 * Update the dog's direction.  The dog will head towards (chase)
 	 * the nearest dog which is up to 45 degree off of its current heading
 	 * and in <code>VISUAL_RANGE</code>.
-	 * If there is no such dog, the dog alters heading by up to 90 degrees.
+	 * If there is no such dog, the dog alters heading by up to 45 degrees.
 	 */
 	private void updateDirection() {
 		Vector<Dog> dogs = fArena.getDogs();
@@ -232,7 +232,7 @@ public class Dog extends Thread {
 			}
 			//otherwise keep wandering
 			else {
-				fDirection = fDirection - 90 + fRand.nextInt(180);
+				fDirection = fDirection - 45 + fRand.nextInt(90);
 				fChasing = false;
 			}
 		}
@@ -248,14 +248,24 @@ public class Dog extends Thread {
 	private void updateVelocity() {
 		if (fResting == true) {
 			fVelocity = 0;
+			fTimeRested++;
+			if (fTimeRested > Dog.NEEDED_REST) {
+				fResting = false;
+				fTimeRested = 0;
+			}
+			return;
 		}
 		else if (fChasing == true) {
 			fVelocity = fVelocity + fRand.nextInt(ACCEL);
 			if (fVelocity > fMaxSpeed) {
 				fVelocity = fMaxSpeed;
 			}
+			return;
 		}
 		fVelocity = fVelocity - 5 + fRand.nextInt(ACCEL);
+		if (fVelocity > fMaxSpeed) {
+			fVelocity = fMaxSpeed;
+		}
 	}
 	
 	/**
@@ -266,10 +276,10 @@ public class Dog extends Thread {
 	 * temp is not allowed to drop below <code>NORMAL_TEMP</code>
 	 */
 	private void updateTemp() {
-		if (fVelocity > fMaxSpeed / 2) {
+		if (fVelocity > fMaxSpeed / 3) {
 			fTemp += 1;
 		}
-		if (fVelocity == 0) {
+		if (fResting == true) {
 			fTemp -= 1;
 		}
 		if (fTemp > Dog.MAX_TEMP) {
@@ -290,16 +300,11 @@ public class Dog extends Thread {
 	 * permitted to drop below <code>NORMAL_HR</code>.
 	 */
 	private void updateHR() {
-		if (fVelocity > fMaxSpeed / 2) {
-			fHR += 1;
+		if (fVelocity > fMaxSpeed / 3) {
+			fHR += 2;
 		}
 		if (fResting == true) {
 			fHR -= 1;
-			fTimeRested++;
-			if (fTimeRested > Dog.NEEDED_REST) {
-				fResting = false;
-				fTimeRested = 0;
-			}
 		}
 		if (fHR > Dog.MAX_HR) {
 			fVelocity = 0;

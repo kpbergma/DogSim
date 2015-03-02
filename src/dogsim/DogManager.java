@@ -23,7 +23,7 @@ public class DogManager {
 	private static int SLEEP_INTERVAL = 2;
 	private static double DOG_INTRO = 0.0001;	//probability of adding a dog
 	private static double DOG_REMOVE = 0.0000;	//probability of removing a dog
-	private static boolean DISPLAY_GUI = true;	//show the interface
+	private static boolean DISPLAY_GUI = false;	//show the interface
 	public static Object elock = new byte[0];   //for synchronizing access to dog Vector.
 	
 	private Arena fSaddleDome;		//interaction space
